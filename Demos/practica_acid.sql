@@ -86,7 +86,7 @@ VALUES (1, 2, 20);
 -- Paso 4: Simular un error intencional para demostrar la Atomicidad.
 -- [Atomicidad] El error genera la falla de la transacción, de modo que ninguna de las operaciones previas se aplicará.
 
-SELECT 1/0;  -- Esta operación provoca un error de división por cero.
+-- SELECT 1/0;  -- Esta operación provoca un error de división por cero.
 
 -- Paso 5: (Este paso no se ejecutará debido al error anterior)
 -- [Consistencia] (Si se ejecutara) se aseguraría que la cuenta destino incremente su saldo de forma correcta.

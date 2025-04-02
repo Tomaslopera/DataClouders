@@ -81,7 +81,7 @@ Resources:
         - Key: Name
           Value: PublicSubnet2
 
-  # Creación del Internet Gateway para habilitar la conectividad a Internet en la VPC
+  # 4. Creación del Internet Gateway para habilitar la conectividad a Internet en la VPC
   InternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
@@ -89,14 +89,14 @@ Resources:
         - Key: Name
           Value: MyInternetGateway
 
-  # Asociación del Internet Gateway con la VPC
+  # 5. Asociación del Internet Gateway con la VPC
   AttachGateway:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
       VpcId: !Ref MyVPC
       InternetGatewayId: !Ref InternetGateway
 
-  # Creación de la tabla de rutas para las subredes públicas
+  # 6. Creación de la tabla de rutas para las subredes públicas
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
@@ -105,7 +105,7 @@ Resources:
         - Key: Name
           Value: PublicRouteTable
 
-  # Configuración de la ruta para dirigir todo el tráfico 0.0.0.0/0 hacia el Internet Gateway
+  # 7. Configuración de la ruta para dirigir todo el tráfico 0.0.0.0/0 hacia el Internet Gateway
   PublicRoute:
     Type: AWS::EC2::Route
     DependsOn: AttachGateway
@@ -114,21 +114,21 @@ Resources:
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: !Ref InternetGateway
 
-  # Asociación de la tabla de rutas a la primera subred pública
+  # 8. Asociación de la tabla de rutas a la primera subred pública
   PublicSubnet1RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref PublicSubnet1
       RouteTableId: !Ref PublicRouteTable
 
-  # Asociación de la tabla de rutas a la segunda subred pública
+  # 9. Asociación de la tabla de rutas a la segunda subred pública
   PublicSubnet2RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref PublicSubnet2
       RouteTableId: !Ref PublicRouteTable
 
-  # Grupo de seguridad que permite el acceso a la base de datos PostgreSQL en el puerto 5432
+  # 10. Grupo de seguridad que permite el acceso a la base de datos PostgreSQL en el puerto 5432
   RDSSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -143,7 +143,7 @@ Resources:
         - Key: Name
           Value: RDSSecurityGroup
 
-  # Grupo de subredes para RDS, se requieren al menos dos subredes en AZs diferentes
+  # 11. Grupo de subredes para RDS, se requieren al menos dos subredes en AZs diferentes
   DBSubnetGroup:
     Type: AWS::RDS::DBSubnetGroup
     Properties:
@@ -155,7 +155,7 @@ Resources:
         - Key: Name
           Value: DBSubnetGroup
 
-  # Instancia RDS PostgreSQL utilizando una instancia db.t4g.micro (compatible con la capa gratuita)
+  # 12. Instancia RDS PostgreSQL utilizando una instancia db.t4g.micro (compatible con la capa gratuita)
   MyPostgreSQLDB:
     Type: AWS::RDS::DBInstance
     Properties:
